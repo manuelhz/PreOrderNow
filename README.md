@@ -92,7 +92,8 @@ up: Starts the services.
 --build: Forces a rebuild of images if there are changes in the Dockerfiles or build context.
 If you are running Docker Desktop, you can also see the running containers there.
 
-6. Usage
+## 6. Usage
+
 Once all containers are up and running:
 
 Frontend: Open your web browser and navigate to http://localhost:5176
@@ -104,7 +105,9 @@ Select a plan (Free or Paid).
 Submit your details.
 The data will be stored in your PostgreSQL database.
 
-7. Project Structure
+## 7. Project Structure
+
+```text
 .
 ├── backend/                  # Spring Boot application
 │   ├── src/                  # Java source code
@@ -118,8 +121,9 @@ The data will be stored in your PostgreSQL database.
 │   └── Dockerfile            # Dockerfile for frontend image
 ├── docker-compose.yml        # Defines multi-container Docker application
 └── README.md                 # This file
+```
 
-8. Stopping the Project
+## 8. Stopping the Project
 To stop and remove the running Docker containers, networks, and volumes (for the database data), run the following command from the project root:
 
 ```bash
@@ -127,5 +131,6 @@ docker compose down -v
 ```
 down: Stops and removes containers, networks, and images created by up.
 -v: Removes named volumes declared in the volumes section of the docker-compose.yml file (e.g., postgres_data). Use this if you want a clean database state next time you start. Otherwise, remove -v to preserve your data.
-9. License
+
+## 9. License
 [MIT, Apache 2.0]
