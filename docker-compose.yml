@@ -1,0 +1,63 @@
+services:
+  database:
+    build: ./database
+    container_name: database
+    secrets:
+      - postgres_user
+      - postgres_password
+      - postgres_db
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/postgres_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_DB_FILE: /run/secrets/postgres_db
+    restart: always
+    ports:
+      - "5432:5432"
+    networks:
+      - spring_net
+    volumes:
+      - db-vol:/var/lib/postgresql/data
+  
+  backend:
+    build: ./backend
+    container_name: backend
+    secrets:
+      - postgres_user
+      - postgres_password
+      - postgres_db
+    environment:      
+      POSTGRES_PORT: 5432
+      POSTGRES_HOST: database
+      POSTGRES_USER_FILE: /run/secrets/postgres_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_DB_FILE: /run/secrets/postgres_db
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+      - spring_net
+      - frontend_net
+    depends_on:
+      - database
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    networks:
+      - frontend_net
+
+networks:
+  spring_net:
+  frontend_net:
+secrets:
+  postgres_user:
+    file: ./secrets/postgres_user.txt
+  postgres_password:
+    file: ./secrets/postgres_password.txt
+  postgres_db:
+    file: ./secrets/postgres_db.txt
+volumes:
+  db-vol:
+    external: true
