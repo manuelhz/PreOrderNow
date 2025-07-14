@@ -96,7 +96,7 @@ If you are running Docker Desktop, you can also see the running containers there
 
 Once all containers are up and running:
 
-Frontend: Open your web browser and navigate to http://localhost:5176
+Frontend: Open your web browser and navigate to http://localhost:5173
 Backend API: The backend API will be accessible at http://localhost:8080 (though you'll primarily interact with it via the frontend).
 You can now interact with the landing page:
 
