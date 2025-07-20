@@ -1,11 +1,11 @@
-package hernzem.landingpage.com.serviceImpl;
+package hernzem.landingpage.com.hello.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import hernzem.landingpage.com.model.Hello;
-import hernzem.landingpage.com.repository.HelloRepository;
-import hernzem.landingpage.com.service.HelloService;
+import hernzem.landingpage.com.hello.model.Hello;
+import hernzem.landingpage.com.hello.repository.HelloRepository;
+import hernzem.landingpage.com.hello.service.HelloService;
 
 @Service("helloService")
 public class HelloServiceImpl implements HelloService {

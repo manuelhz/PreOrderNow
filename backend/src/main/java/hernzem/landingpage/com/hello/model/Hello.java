@@ -1,4 +1,4 @@
-package hernzem.landingpage.com.model;
+package hernzem.landingpage.com.hello.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

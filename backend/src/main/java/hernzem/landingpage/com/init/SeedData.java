@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import hernzem.landingpage.com.model.Hello;
-import hernzem.landingpage.com.service.HelloService;
+import hernzem.landingpage.com.hello.model.Hello;
+import hernzem.landingpage.com.hello.service.HelloService;
 
 @Component
 public class SeedData implements CommandLineRunner {

@@ -1,8 +1,8 @@
-package hernzem.landingpage.com.service;
+package hernzem.landingpage.com.hello.service;
 
 import org.springframework.stereotype.Service;
 
-import hernzem.landingpage.com.model.Hello;
+import hernzem.landingpage.com.hello.model.Hello;
 
 @Service("helloService")
 public interface HelloService {
