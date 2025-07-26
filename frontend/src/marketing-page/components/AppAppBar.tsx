@@ -136,21 +136,20 @@ export default function AppAppBar() {
                   </IconButton>
                 </Box>
 
-                <MenuItem>Features</MenuItem>
-                <MenuItem>Testimonials</MenuItem>
-                <MenuItem>Highlights</MenuItem>
-                <MenuItem>Pricing</MenuItem>
-                <MenuItem>FAQ</MenuItem>
-                <MenuItem>Blog</MenuItem>
+                {/* Dynamically render navigation links*/}
+                {appBar.mainNavigationItems.map((link) => (
+                  <MenuItem key={link.id} component="a" href={link.path}>{link.label}</MenuItem>
+                ))}
+
                 <Divider sx={{ my: 3 }} />
                 <MenuItem>
-                  <Button color="primary" variant="contained" fullWidth>
-                    Sign up
+                  <Button color="primary" variant="contained" fullWidth {...buttonLinkProps}>
+                    {appBar.earlyAccessButton.label}
                   </Button>
                 </MenuItem>
                 <MenuItem>
-                  <Button color="primary" variant="outlined" fullWidth>
-                    Sign in
+                  <Button color="primary" variant="outlined" fullWidth {...buttonLinkProps}>
+                    {appBar.earlyAccessButton.label}
                   </Button>
                 </MenuItem>
               </Box>

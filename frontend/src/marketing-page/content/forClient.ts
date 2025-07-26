@@ -30,7 +30,7 @@ export const forClientContent: MarketingPageContent = {
         logoLink: "/",
         logoAltText: "MyCompany Logo",
         mainNavigationItems: [
-            { id: "1", label: "Featuress", path: "#features" },
+            { id: "1", label: "Features", path: "#features" },
             { id: "2", label: "Highlights", path: "#highlights" },
             { id: "3", label: "Pricing", path: "#pricing" },
             { id: "4", label: "FAQ", path: "#faq" },
@@ -47,7 +47,7 @@ export const forClientContent: MarketingPageContent = {
             placeHolder: "your@example.com",
             ariaLabel: "Enter your email address to get started",
         } as EmailInput,
-        primaryButtonText: { label: "Start Free Trial", path: "/signup" } as  NavigationItem,
+        primaryButton: { label: "Start Free Trial", path: "/signup" , target: "_self"} as  NavigationItem,
         disclaimerPrefix: "By clicking \"Start Free Trial\" you agree to our ",
         disclaimerLink: { label: "Terms & Conditions", path: "/terms", target: "_blank" } as NavigationItem,
         diclaimerSufix: ".",

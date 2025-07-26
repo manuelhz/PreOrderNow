@@ -26,7 +26,7 @@ export interface Hero {
 
     // Call to action section
     emailInput: EmailInput; // Nested object for email input details
-    primaryButtonText: NavigationItem; // eg. "Start now"
+    primaryButton: NavigationItem; // eg. "Start now"
 
     // Disclaimer/Caption section
     disclaimerPrefix: string; // e.g., "By clicking \"Start now\" you agree to our "

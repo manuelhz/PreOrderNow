@@ -2,14 +2,19 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import InputLabel from '@mui/material/InputLabel';
-import Link from '@mui/material/Link';
+import MuiLink from '@mui/material/Link'; // because name Link clashes changed name from Link to MuiLink
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import visuallyHidden from '@mui/utils/visuallyHidden';
 import { styled } from '@mui/material/styles';
 
+// Import the custom hook to access marketing content
+import { useMarketingContent } from '../MarketingPage';
+import { Link } from 'react-router-dom';
 
+import lightImage from '/src/assets/images/pexels-blue-bird-7210472.jpg';
+import darkImage from '/src/assets/images/pexels-blue-bird-7210472.jpg';
 
 const StyledBox = styled('div')(({ theme }) => ({
   alignSelf: 'center',
@@ -22,7 +27,8 @@ const StyledBox = styled('div')(({ theme }) => ({
   border: '1px solid',
   borderColor: (theme.vars || theme).palette.grey[200],
   boxShadow: '0 0 12px 8px hsla(220, 25%, 80%, 0.2)',
-  backgroundImage: `url(${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/screenshots/material-ui/getting-started/templates/dashboard.jpg)`,
+  backgroundImage: `url(${lightImage})`,
+  
   backgroundSize: 'cover',
   [theme.breakpoints.up('sm')]: {
     marginTop: theme.spacing(10),
@@ -30,13 +36,30 @@ const StyledBox = styled('div')(({ theme }) => ({
   },
   ...theme.applyStyles('dark', {
     boxShadow: '0 0 24px 12px hsla(210, 100%, 25%, 0.2)',
-    backgroundImage: `url(${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/screenshots/material-ui/getting-started/templates/dashboard-dark.jpg)`,
+    backgroundImage: `url(${darkImage})`,
     outlineColor: 'hsla(220, 20%, 42%, 0.1)',
     borderColor: (theme.vars || theme).palette.grey[700],
   }),
 }));
 
 export default function Hero() {
+
+  // Consume the marketing content using the custom hook
+  const { hero } = useMarketingContent();
+
+    // Determine if the button link should open in a new tab
+    const isExternalLink = hero.primaryButton.target === '_blank';
+    const buttonLinkProps = isExternalLink
+      ? {
+          href: hero.primaryButton.path,
+          target: '_blank',
+          rel: 'noopener noreferrer', // Recommended for security when using target="_blank"
+        }
+      : {
+          component:  Link, // Use react-router-dom's Link component
+          to: hero.primaryButton.path, // Path for internal routing
+        }
+
   return (
     <Box
       id="hero"
@@ -75,7 +98,7 @@ export default function Hero() {
               fontSize: 'clamp(3rem, 10vw, 3.5rem)',
             }}
           >
-            Our&nbsp;latest&nbsp;
+            {hero.titlePrefix}&nbsp;
             <Typography
               component="span"
               variant="h1"
@@ -87,7 +110,7 @@ export default function Hero() {
                 }),
               })}
             >
-              products
+              {hero.titleHighlight}
             </Typography>
           </Typography>
           <Typography
@@ -97,9 +120,7 @@ export default function Hero() {
               width: { sm: '100%', md: '80%' },
             }}
           >
-            Explore our cutting-edge dashboard, delivering high-quality solutions
-            tailored to your needs. Elevate your experience with top-tier features
-            and services.
+            {hero.description}
           </Typography>
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
@@ -115,13 +136,13 @@ export default function Hero() {
               hiddenLabel
               size="small"
               variant="outlined"
-              aria-label="Enter your email address"
-              placeholder="Your email address"
+              aria-label={hero.emailInput.ariaLabel}
+              placeholder={hero.emailInput.placeHolder}
               fullWidth
               slotProps={{
                 htmlInput: {
                   autoComplete: 'off',
-                  'aria-label': 'Enter your email address',
+                  'aria-label': hero.emailInput.ariaLabel,
                 },
               }}
             />
@@ -130,8 +151,9 @@ export default function Hero() {
               color="primary"
               size="small"
               sx={{ minWidth: 'fit-content' }}
+              {...buttonLinkProps}
             >
-              Start now
+              {hero.primaryButton.label}
             </Button>
           </Stack>
           <Typography
@@ -139,10 +161,10 @@ export default function Hero() {
             color="text.secondary"
             sx={{ textAlign: 'center' }}
           >
-            By clicking &quot;Start now&quot; you agree to our&nbsp;
-            <Link href="#" color="primary">
-              Terms & Conditions
-            </Link>
+            {hero.disclaimerPrefix}
+            <MuiLink href={hero.disclaimerLink.path} color="primary">
+              {hero.disclaimerLink.label}
+            </MuiLink>
             .
           </Typography>
         </Stack>

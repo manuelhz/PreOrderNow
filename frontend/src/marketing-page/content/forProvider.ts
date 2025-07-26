@@ -47,7 +47,7 @@ export const forProviderContent: MarketingPageContent = {
             placeHolder: "your@example.com",
             ariaLabel: "Enter your email address to get started",
         } as EmailInput,
-        primaryButtonText: { label: "Start Free Trial", path: "/signup" } as  NavigationItem,
+        primaryButton: { label: "Start Free Trial", path: "/signup" } as  NavigationItem,
         disclaimerPrefix: "By clicking \"Start Free Trial\" you agree to our ",
         disclaimerLink: { label: "Terms & Conditions", path: "/terms", target: "_blank" } as NavigationItem,
         diclaimerSufix: ".",
