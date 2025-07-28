@@ -51,8 +51,8 @@ export const forProviderContent: MarketingPageContent = {
         disclaimerPrefix: "By clicking \"Start Free Trial\" you agree to our ",
         disclaimerLink: { label: "Terms & Conditions", path: "/terms", target: "_blank" } as NavigationItem,
         diclaimerSufix: ".",
-        lightModeImageUrl: "/images/hero-light.webp", // Placeholder
-        darkModeImageUrl: "/images/hero-dark.webp",   // Placeholder
+        lightModeImageUrl: "/src/assets/images/pexels-blue-bird-7210472.jpg", // Placeholder
+        darkModeImageUrl: "/src/assets/images/pexels-blue-bird-7210472.jpg",   // Placeholder
     } as Hero,
 
     features: {

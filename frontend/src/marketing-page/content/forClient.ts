@@ -17,14 +17,34 @@ import type {
     NavigationList,
     Copyright,
     SocialLink
-} from '../types/content.ts'; // Adjust path if your 'types' folder is elsewhere
+} from '../types/content.ts';
 
+// hero images
+import lightHeroImage from '/src/assets/images/hero/pexels-blue-bird-7210472.jpg';
+import darkHeroImage from '/src/assets/images/hero/pexels-blue-bird-7210472.jpg';
+
+// features images
+import photoFeat1 from '/src/assets/images/features/pexels-blue-bird-7210727.jpg'; 
+import photoFeat2 from '/src/assets/images/features/pexels-goochie-poochie-3299905.jpg';
+import photoFeat3 from '/src/assets/images/features/pexels-pixabay-257519.jpg';
+
+// features icons
+// import { default as CalendarMonthRoundedIcon } from '@mui/icons-material/CalendarMonthRounded';
+// import { default as PhotoCameraRoundedIcon } from '@mui/icons-material/PhotoCameraRounded';
+// import { default as TrendingUpRoundedIcon } from '@mui/icons-material/TrendingUpRounded';
+// import {
+//   CalendarMonthRounded as CalendarMonthRoundedIcon,
+//   PhotoCameraRounded as PhotoCameraRoundedIcon,
+//   TrendingUpRounded as TrendingUpRoundedIcon,
+// } from '@mui/icons-material';
 /**
  * Mock data for the MarketingPage component.
  * This object conforms to the MarketingPage interface defined in src/types/contents.ts.
  */
+
 export const forClientContent: MarketingPageContent = {
     pageVersion: "1.0.0-beta",
+
 
     appBar: {
         logoLink: "/",
@@ -51,34 +71,33 @@ export const forClientContent: MarketingPageContent = {
         disclaimerPrefix: "By clicking \"Start Free Trial\" you agree to our ",
         disclaimerLink: { label: "Terms & Conditions", path: "/terms", target: "_blank" } as NavigationItem,
         diclaimerSufix: ".",
-        lightModeImageUrl: "/images/hero-light.webp", // Placeholder
-        darkModeImageUrl: "/images/hero-dark.webp",   // Placeholder
-    } as Hero,
-
+        lightModeImageUrl: lightHeroImage, // Placeholder
+        darkModeImageUrl: darkHeroImage,   // Placeholder
+    } as Hero,    
     features: {
         headerTitle: "Product Features",
         headerDescription: "Discover how our platform empowers you with intelligent tools and seamless integration.",
-        items: [
+        items:  [
             {
-                icon: "monitoring", // Material UI icon name or custom SVG path
+                icon: 'CalendarMonthRoundedIcon',
                 title: "Advanced Analytics",
                 description: "Gain deep insights with customizable dashboards and real-time data visualization.",
-                imageLightUrl: "/images/feature1-light.webp",
-                imageDarkUrl: "/images/feature1-dark.webp",
+                imageLightUrl: photoFeat1,
+                imageDarkUrl: photoFeat1,
             },
             {
-                icon: "security",
+                icon: 'PhotoCameraRoundedIcon',
                 title: "Robust Security",
                 description: "Your data is protected with enterprise-grade encryption and compliance standards.",
-                imageLightUrl: "/images/feature2-light.webp",
-                imageDarkUrl: "/images/feature2-dark.webp",
+                imageLightUrl: photoFeat2,
+                imageDarkUrl: photoFeat2,
             },
             {
-                icon: "settings_suggest",
+                icon: 'TrendingUpRoundedIcon',
                 title: "Effortless Customization",
                 description: "Tailor the platform to your specific needs with flexible settings and integrations.",
-                imageLightUrl: "/images/feature3-light.webp",
-                imageDarkUrl: "/images/feature3-dark.webp",
+                imageLightUrl: photoFeat3,
+                imageDarkUrl: photoFeat3,
             },
         ] as FeatureItem[],
     } as Feature,

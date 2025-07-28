@@ -13,10 +13,14 @@ import { styled } from '@mui/material/styles';
 import { useMarketingContent } from '../MarketingPage';
 import { Link } from 'react-router-dom';
 
-import lightImage from '/src/assets/images/pexels-blue-bird-7210472.jpg';
-import darkImage from '/src/assets/images/pexels-blue-bird-7210472.jpg';
+// Define Props Interface for StyledBox ---
+interface StyledBoxProps {
+  lightModeImageUrl: string;
+  darkModeImageUrl: string;
+}
 
-const StyledBox = styled('div')(({ theme }) => ({
+// --- MODIFIED: StyledBox now accepts and uses props ---
+const StyledBox = styled('div')<StyledBoxProps>(({ theme, lightModeImageUrl, darkModeImageUrl }) => ({
   alignSelf: 'center',
   width: '100%',
   height: 400,
@@ -27,8 +31,9 @@ const StyledBox = styled('div')(({ theme }) => ({
   border: '1px solid',
   borderColor: (theme.vars || theme).palette.grey[200],
   boxShadow: '0 0 12px 8px hsla(220, 25%, 80%, 0.2)',
-  backgroundImage: `url(${lightImage})`,
-  
+  // Use lightModeImageUrl from props
+  backgroundImage: `url(${lightModeImageUrl})`,
+
   backgroundSize: 'cover',
   [theme.breakpoints.up('sm')]: {
     marginTop: theme.spacing(10),
@@ -36,29 +41,29 @@ const StyledBox = styled('div')(({ theme }) => ({
   },
   ...theme.applyStyles('dark', {
     boxShadow: '0 0 24px 12px hsla(210, 100%, 25%, 0.2)',
-    backgroundImage: `url(${darkImage})`,
+    // Use darkModeImageUrl from props
+    backgroundImage: `url(${darkModeImageUrl})`,
     outlineColor: 'hsla(220, 20%, 42%, 0.1)',
     borderColor: (theme.vars || theme).palette.grey[700],
   }),
 }));
 
 export default function Hero() {
-
   // Consume the marketing content using the custom hook
   const { hero } = useMarketingContent();
 
-    // Determine if the button link should open in a new tab
-    const isExternalLink = hero.primaryButton.target === '_blank';
-    const buttonLinkProps = isExternalLink
-      ? {
-          href: hero.primaryButton.path,
-          target: '_blank',
-          rel: 'noopener noreferrer', // Recommended for security when using target="_blank"
-        }
-      : {
-          component:  Link, // Use react-router-dom's Link component
-          to: hero.primaryButton.path, // Path for internal routing
-        }
+  // Determine if the button link should open in a new tab
+  const isExternalLink = hero.primaryButton.target === '_blank';
+  const buttonLinkProps = isExternalLink
+    ? {
+        href: hero.primaryButton.path,
+        target: '_blank',
+        rel: 'noopener noreferrer', // Recommended for security when using target="_blank"
+      }
+    : {
+        component: Link, // Use react-router-dom's Link component
+        to: hero.primaryButton.path, // Path for internal routing
+      };
 
   return (
     <Box
@@ -66,7 +71,6 @@ export default function Hero() {
       sx={(theme) => ({
         width: '100%',
         backgroundRepeat: 'no-repeat',
-
         backgroundImage:
           'radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 90%), transparent)',
         ...theme.applyStyles('dark', {
@@ -165,10 +169,15 @@ export default function Hero() {
             <MuiLink href={hero.disclaimerLink.path} color="primary">
               {hero.disclaimerLink.label}
             </MuiLink>
-            .
+            {hero.diclaimerSufix}
           </Typography>
         </Stack>
-        <StyledBox id="image" />
+
+        <StyledBox
+          id="image"
+          lightModeImageUrl={hero.lightModeImageUrl}
+          darkModeImageUrl={hero.darkModeImageUrl}
+        />
       </Container>
     </Box>
   );

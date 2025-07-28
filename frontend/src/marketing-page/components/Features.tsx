@@ -7,36 +7,43 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 
-import DevicesRoundedIcon from '@mui/icons-material/DevicesRounded';
-import EdgesensorHighRoundedIcon from '@mui/icons-material/EdgesensorHighRounded';
-import ViewQuiltRoundedIcon from '@mui/icons-material/ViewQuiltRounded';
+// import DevicesRoundedIcon from '@mui/icons-material/DevicesRounded';
+// import EdgesensorHighRoundedIcon from '@mui/icons-material/EdgesensorHighRounded';
+// import ViewQuiltRoundedIcon from '@mui/icons-material/ViewQuiltRounded';
 
-const items = [
-  {
-    icon: <ViewQuiltRoundedIcon />,
-    title: 'Dashboard',
-    description:
-      'This item could provide a snapshot of the most important metrics or data points related to the product.',
-    imageLight: `url("${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/images/templates/templates-images/dash-light.png")`,
-    imageDark: `url("${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/images/templates/templates-images/dash-dark.png")`,
-  },
-  {
-    icon: <EdgesensorHighRoundedIcon />,
-    title: 'Mobile integration',
-    description:
-      'This item could provide information about the mobile app version of the product.',
-    imageLight: `url("${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/images/templates/templates-images/mobile-light.png")`,
-    imageDark: `url("${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/images/templates/templates-images/mobile-dark.png")`,
-  },
-  {
-    icon: <DevicesRoundedIcon />,
-    title: 'Available on all platforms',
-    description:
-      'This item could let users know the product is available on all platforms, such as web, mobile, and desktop.',
-    imageLight: `url("${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/images/templates/templates-images/devices-light.png")`,
-    imageDark: `url("${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/images/templates/templates-images/devices-dark.png")`,
-  },
-];
+// Import the custom hook to access marketing content
+import { useMarketingContent } from '../MarketingPage';
+import type { FeatureItem } from '../types/content';
+import { FallbackIcon, MuiIconMap } from '../types/iconMap';
+
+//const items = features.items;
+
+// const items = [
+//   {
+//     icon: <ViewQuiltRoundedIcon />,
+//     title: 'Dashboard',
+//     description:
+//       'This item could provide a snapshot of the most important metrics or data points related to the product.',
+//     imageLight: `url(${photo})`,
+//     imageDark: `url("${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/images/templates/templates-images/dash-dark.png")`,
+//   },
+//   {
+//     icon: <EdgesensorHighRoundedIcon />,
+//     title: 'Mobile integration',
+//     description:
+//       'This item could provide information about the mobile app version of the product.',
+//     imageLight: `url("${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/images/templates/templates-images/mobile-light.png")`,
+//     imageDark: `url("${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/images/templates/templates-images/mobile-dark.png")`,
+//   },
+//   {
+//     icon: <DevicesRoundedIcon />,
+//     title: 'Available on all platforms',
+//     description:
+//       'This item could let users know the product is available on all platforms, such as web, mobile, and desktop.',
+//     imageLight: `url("${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/images/templates/templates-images/devices-light.png")`,
+//     imageDark: `url("${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/images/templates/templates-images/devices-dark.png")`,
+//   },
+// ];
 
 interface ChipProps {
   selected?: boolean;
@@ -65,13 +72,15 @@ const Chip = styled(MuiChip)<ChipProps>(({ theme }) => ({
 interface MobileLayoutProps {
   selectedItemIndex: number;
   handleItemClick: (index: number) => void;
-  selectedFeature: (typeof items)[0];
+  selectedFeature: FeatureItem;
+  items: FeatureItem[];
 }
 
 export function MobileLayout({
   selectedItemIndex,
   handleItemClick,
   selectedFeature,
+  items
 }: MobileLayoutProps) {
   if (!items[selectedItemIndex]) {
     return null;
@@ -111,8 +120,8 @@ export function MobileLayout({
           style={
             items[selectedItemIndex]
               ? ({
-                  '--items-imageLight': items[selectedItemIndex].imageLight,
-                  '--items-imageDark': items[selectedItemIndex].imageDark,
+                  '--items-imageLight': items[selectedItemIndex].imageLightUrl,
+                  '--items-imageDark': items[selectedItemIndex].imageDarkUrl,
                 } as any)
               : {}
           }
@@ -134,13 +143,16 @@ export function MobileLayout({
 }
 
 export default function Features() {
+
+  const { features } = useMarketingContent();
+  
   const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);
 
   const handleItemClick = (index: number) => {
     setSelectedItemIndex(index);
   };
 
-  const selectedFeature = items[selectedItemIndex];
+  const selectedFeature = features.items[selectedItemIndex];
 
   return (
     <Container id="features" sx={{ py: { xs: 8, sm: 16 } }}>
@@ -151,15 +163,13 @@ export default function Features() {
           gutterBottom
           sx={{ color: 'text.primary' }}
         >
-          Product features
+          {features.headerTitle}
         </Typography>
         <Typography
           variant="body1"
           sx={{ color: 'text.secondary', mb: { xs: 2, sm: 4 } }}
         >
-          Provide a brief overview of the key features of the product. For example,
-          you could list the number of features, their types or benefits, and
-          add-ons.
+          {features.headerDescription}
         </Typography>
       </Box>
       <Box
@@ -178,8 +188,10 @@ export default function Features() {
               height: '100%',
             }}
           >
-            {items.map(({ icon, title, description }, index) => (
-              <Box
+            {features.items.map(({ icon, title, description }, index) => {
+              const IconComponent = MuiIconMap[icon] || FallbackIcon;
+              return (
+                <Box
                 key={index}
                 component={Button}
                 onClick={() => handleItemClick(index)}
@@ -214,18 +226,21 @@ export default function Features() {
                     },
                   ]}
                 >
-                  {icon}
+                  <IconComponent /> {/* can now pass props, e.g., <IconComponent sx={{ fontSize: 'large' }} /> */}
 
                   <Typography variant="h6">{title}</Typography>
                   <Typography variant="body2">{description}</Typography>
                 </Box>
               </Box>
-            ))}
+              );
+              
+})}
           </Box>
           <MobileLayout
             selectedItemIndex={selectedItemIndex}
             handleItemClick={handleItemClick}
             selectedFeature={selectedFeature}
+            items={features.items}
           />
         </div>
         <Box
@@ -242,24 +257,31 @@ export default function Features() {
               width: '100%',
               display: { xs: 'none', sm: 'flex' },
               pointerEvents: 'none',
+              overflow: 'hidden'              
             }}
           >
             <Box
               sx={(theme) => ({
                 m: 'auto',
                 width: 420,
-                height: 500,
-                backgroundSize: 'contain',
+                //height: 500,
+                height: 250,
+                backgroundSize: 'cover', // or 'cover' if you want it to fill the space or 'contain'
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                // borderRadius: theme.shape.borderRadius, // theme border radious
+                borderRadius: '10px',
+                overflow: 'hidden',
                 backgroundImage: 'var(--items-imageLight)',
                 ...theme.applyStyles('dark', {
                   backgroundImage: 'var(--items-imageDark)',
-                }),
+                }),                
               })}
               style={
-                items[selectedItemIndex]
+                features.items[selectedItemIndex]
                   ? ({
-                      '--items-imageLight': items[selectedItemIndex].imageLight,
-                      '--items-imageDark': items[selectedItemIndex].imageDark,
+                      '--items-imageLight': `url(${features.items[selectedItemIndex].imageLightUrl})`,
+                      '--items-imageDark': features.items[selectedItemIndex].imageDarkUrl,
                     } as any)
                   : {}
               }
