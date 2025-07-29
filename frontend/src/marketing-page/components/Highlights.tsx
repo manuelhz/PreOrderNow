@@ -4,53 +4,56 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import AutoFixHighRoundedIcon from '@mui/icons-material/AutoFixHighRounded';
-import ConstructionRoundedIcon from '@mui/icons-material/ConstructionRounded';
-import QueryStatsRoundedIcon from '@mui/icons-material/QueryStatsRounded';
-import SettingsSuggestRoundedIcon from '@mui/icons-material/SettingsSuggestRounded';
-import SupportAgentRoundedIcon from '@mui/icons-material/SupportAgentRounded';
-import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
+import { useMarketingContent } from '../MarketingPage';
+import { FallbackIcon, MuiIconMap } from '../types/iconMap';
+// import AutoFixHighRoundedIcon from '@mui/icons-material/AutoFixHighRounded';
+// import ConstructionRoundedIcon from '@mui/icons-material/ConstructionRounded';
+// import QueryStatsRoundedIcon from '@mui/icons-material/QueryStatsRounded';
+// import SettingsSuggestRoundedIcon from '@mui/icons-material/SettingsSuggestRounded';
+// import SupportAgentRoundedIcon from '@mui/icons-material/SupportAgentRounded';
+// import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
 
-const items = [
-  {
-    icon: <SettingsSuggestRoundedIcon />,
-    title: 'Adaptable performance',
-    description:
-      'Our product effortlessly adjusts to your needs, boosting efficiency and simplifying your tasks.',
-  },
-  {
-    icon: <ConstructionRoundedIcon />,
-    title: 'Built to last',
-    description:
-      'Experience unmatched durability that goes above and beyond with lasting investment.',
-  },
-  {
-    icon: <ThumbUpAltRoundedIcon />,
-    title: 'Great user experience',
-    description:
-      'Integrate our product into your routine with an intuitive and easy-to-use interface.',
-  },
-  {
-    icon: <AutoFixHighRoundedIcon />,
-    title: 'Innovative functionality',
-    description:
-      'Stay ahead with features that set new standards, addressing your evolving needs better than the rest.',
-  },
-  {
-    icon: <SupportAgentRoundedIcon />,
-    title: 'Reliable support',
-    description:
-      'Count on our responsive customer support, offering assistance that goes beyond the purchase.',
-  },
-  {
-    icon: <QueryStatsRoundedIcon />,
-    title: 'Precision in every detail',
-    description:
-      'Enjoy a meticulously crafted product where small touches make a significant impact on your overall experience.',
-  },
-];
+// const items = [
+//   {
+//     icon: <SettingsSuggestRoundedIcon />,
+//     title: 'Adaptable performance',
+//     description:
+//       'Our product effortlessly adjusts to your needs, boosting efficiency and simplifying your tasks.',
+//   },
+//   {
+//     icon: <ConstructionRoundedIcon />,
+//     title: 'Built to last',
+//     description:
+//       'Experience unmatched durability that goes above and beyond with lasting investment.',
+//   },
+//   {
+//     icon: <ThumbUpAltRoundedIcon />,
+//     title: 'Great user experience',
+//     description:
+//       'Integrate our product into your routine with an intuitive and easy-to-use interface.',
+//   },
+//   {
+//     icon: <AutoFixHighRoundedIcon />,
+//     title: 'Innovative functionality',
+//     description:
+//       'Stay ahead with features that set new standards, addressing your evolving needs better than the rest.',
+//   },
+//   {
+//     icon: <SupportAgentRoundedIcon />,
+//     title: 'Reliable support',
+//     description:
+//       'Count on our responsive customer support, offering assistance that goes beyond the purchase.',
+//   },
+//   {
+//     icon: <QueryStatsRoundedIcon />,
+//     title: 'Precision in every detail',
+//     description:
+//       'Enjoy a meticulously crafted product where small touches make a significant impact on your overall experience.',
+//   },
+// ];
 
 export default function Highlights() {
+  const { highlights } = useMarketingContent();
   return (
     <Box
       id="highlights"
@@ -77,17 +80,17 @@ export default function Highlights() {
           }}
         >
           <Typography component="h2" variant="h4" gutterBottom>
-            Highlights
+            {highlights.title}
           </Typography>
           <Typography variant="body1" sx={{ color: 'grey.400' }}>
-            Explore why our product stands out: adaptability, durability,
-            user-friendly design, and innovation. Enjoy reliable customer support and
-            precision in every detail.
+            {highlights.subheader}
           </Typography>
         </Box>
         <Grid container spacing={2}>
-          {items.map((item, index) => (
-            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
+          {highlights.items.map((item, index) => {
+            const IconComponent = MuiIconMap[item.iconName] || FallbackIcon;
+            return(
+              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
               <Stack
                 direction="column"
                 component={Card}
@@ -101,7 +104,7 @@ export default function Highlights() {
                   backgroundColor: 'grey.800',
                 }}
               >
-                <Box sx={{ opacity: '50%' }}>{item.icon}</Box>
+                <Box sx={{ opacity: '50%' }}><IconComponent /></Box>
                 <div>
                   <Typography gutterBottom sx={{ fontWeight: 'medium' }}>
                     {item.title}
@@ -112,7 +115,8 @@ export default function Highlights() {
                 </div>
               </Stack>
             </Grid>
-          ))}
+            );
+          })}
         </Grid>
       </Container>
     </Box>
